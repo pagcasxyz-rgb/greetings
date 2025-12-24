@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abcd</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .click-hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>   
+<body>
+  <div class="box">
+    <h2 id="title">ASK D QUESTION</h2>
+    Do you want to access?
+    <p id="question"></p>
+   
+    <div class="buttons">
+      <button class="yes" id="yesBtn">YES</button>
+      <button class="no" id="noBtn">NO</button>
+    </div>
+    
+    <div class="click-hint">💡 Tap anywhere to change the question!</div>
+    <div id="result" style="margin-top: 20px; font-weight: bold; display: none;"></div>
+  </div>
+
+  <!-- Hidden form for the secret letter -->
+  <div id="letterForm" class="hidden">
+    <div class="box">
+      <p>Enter the password to view the letter:</p>
+      <input type="password" id="passwordInput" placeholder="Enter password">
+      <button onclick="checkPassword()">UNLOCK LETTER</button>
+      <p id="errorMsg" style="color: red; display: none;">Wrong password! Try again.</p>
+    </div>
+  </div>
+
+  <script>
+    // Array of different questions
+    const questions = [
+      "R U FR?",
+      "R U FR?"
+    ];
+
+    // Variables to track state
+    let currentQuestionIndex = 0;
+    const questionElement = document.getElementById('question');
+    const box = document.querySelector('.box');
+    const body = document.body;
+
+    // Function to change question
+    function changeQuestion() {
+      currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+      questionElement.textContent = questions[currentQuestionIndex];
+      questionElement.style.transform = 'scale(1.05)';
+      questionElement.style.color = getRandomColor();
+      setTimeout(() => { questionElement.style.transform = 'scale(1)'; }, 300);
+    }
+
+    // Function to get a random color
+    function getRandomColor() {
+      const colors = ['#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2', '#EF476F', '#073B4C'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Function to open letter in new tab
+    function openLetterTab() {
+      const newTab = window.open('', '_blank');
+      newTab.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>IF YK YK</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background: linear-gradient(135deg, #121212 0%, #121212 100%);
+                    height: 100vh;
+                    margin: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .letter-container {
+                    background: white;
+                    padding: 40px;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    max-width: 600px;
+                    text-align: center;
+                }
+                .letter-content {
+                    color: #555;
+                    line-height: 1.6;
+                    text-align: left;
+                }
+                .password-section {
+                    margin-top: 30px;
+                    padding: 20px;
+                    background: #f5f5f5;
+                    border-radius: 10px;
+                }
+                input {
+                    padding: 10px;
+                    margin: 10px;
+                    width: 200px;
+                    border: 2px solid #667eea;
+                    border-radius: 5px;
+                }
+                button {
+                    background: #667eea;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="letter-container">
+                <div class="letter-content">
+                    <p style="margin-top: 20px;">Dear Peasant,</p>
+                    <p>You completed half of the passage, yet you arrived at the hardest part.</p>
+                    <p>Once you answer the riddle the passage will be revealed</p>
+                    <p style="font-style: italic;">"I am a short count that never skips.
+I begin with two dozens,
+end just after a quarter century,
+and move forward one step at a time.
+What numbers am I-?"</p>
+                      <p> NOTE: 3 NUMBERS. NO SPACE</P>
+                    <p style="margin-top: 30px;"><strong>HINT</strong><br>A name</p>
+                </div>
+                
+                <div class="password-section">
+                    <h3>Enter the key:</h3>
+                    <input type="password" id="letterPassword" placeholder="Enter password here">
+                    <button onclick="revealMessage()">REVEAL PASSAGE</button>
+                    <p id="letterMessage" style="display: none; margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 5px;">
+                        <strong>🎉 CONGRATULATIONS! 🎉</strong><br><br>
+                        You've unlocked the secret message!<br><br>
+                        <strong>THE ULTIMATE SECRET:</strong><br>
+                        "The real treasure was the knowledge you gained along the way. Always keep learning and exploring!"
+                    </p>
+                </div>
+            </div>
+            
+            <script>
+                function revealMessage() {
+                    const password = document.getElementById('letterPassword').value;
+                    const message = document.getElementById('letterMessage');
+                    const section = document.querySelector('.password-section');
+
+                    if (password === '242526') {
+                        message.style.display = 'block';
+                        // Keep original message and add clickable link
+                        message.innerHTML = \`
+                            <strong> You've unlocked the secret message.(WHAT A NERD!)! </strong><br><br>
+                            Hi IKANG! i just know how password works diria so why not dili gamiton and para dili pod casual ang greetings 😈😈😈🙏🙏🙏.
+                           Anyways Merry Christmas and Happy New Year! May your home be filled with love, happiness, and good cheer. Lingaw lingaw sa diha kay mo abotay na ang kasakit HAHAHAHAHA.
+                           Gamayon ra nako ni akong message aron dili ka makahilak(wala nay maingon).
+                           Send ra sa JNT ang mango float og spag kay maghulat rako diri. 
+                            PS: tuploka ng link, ako na<br><br>
+                            <strong>THE ULTIMATE SECRET:</strong><br>
+                            <a href="https://vt.tiktok.com/ZSP72fYMW/" target="_blank" style="color: black; text-decoration: underline;">Click Here</a>
+                        \`;
+                        section.style.background = 'peach';
+                    } else {
+                        alert('Incorrect password! Try again.');
+                    }
+                }
+
+                // Allow Enter key to submit
+                document.getElementById('letterPassword').addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        revealMessage();
+                    }
+                });
+            <\/script>
+        </body>
+        </html>
+      `);
+      newTab.document.close();
+    } 
+
+    // YES button action
+    document.getElementById('yesBtn').addEventListener('click', function() {
+      const result = document.getElementById('result');
+      if (questionElement.textContent === questions[1]) {
+        result.textContent = 'OPENING...';
+        result.style.color = '#4CAF50';
+        result.style.display = 'block';
+        box.style.border = '3px solid #FF9800';
+        box.style.boxShadow = '0 0 20px rgba(255, 152, 0, 0.3)';
+        setTimeout(() => { openLetterTab(); }, 1000);
+      } else {
+        result.textContent = 'CONTINUE';
+        result.style.color = '#4CAF50';
+        result.style.display = 'block';
+        box.style.border = '3px solid #4CAF50';
+        box.style.boxShadow = '0 0 20px rgba(76, 175, 80, 0.3)';
+      }
+    });
+
+    // NO button action
+    document.getElementById('noBtn').addEventListener('click', function() {
+      const result = document.getElementById('result');
+      result.textContent = 'ALR DAWG JUST CLOSE THE TAB';
+      result.style.color = '#f44336';
+      result.style.display = 'block';
+      box.style.border = '3px solid #f44336';
+      box.style.boxShadow = '0 0 20px rgba(244, 67, 54, 0.3)';
+    });
+
+    // Click/tap anywhere to change question
+    body.addEventListener('click', function(event) {
+      if (!event.target.closest('.buttons')) {
+        changeQuestion();
+      }
+    });
+
+    // Keyboard support (spacebar)
+    document.addEventListener('keydown', function(event) {
+      if (event.code === 'Space') {
+        event.preventDefault();
+        changeQuestion();
+      }
+    });
+
+    // Touch support
+    body.addEventListener('touchstart', function(event) {
+      if (!event.target.closest('.buttons')) {
+        changeQuestion();
+      }
+    });
+
+    // Initial animation
+    setTimeout(() => { questionElement.style.transition = 'all 0.3s ease'; }, 100);
+  </script>
+</body>
+</html>
